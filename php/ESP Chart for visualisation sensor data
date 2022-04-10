@@ -1,14 +1,14 @@
 //PHP Script to Visualize contents in the database in the form of a chart
 <?php
 
-$servername = "mysql06.manitu.net";
+$servername = "server";
 
 // REPLACE with your Database name
-$dbname = "web290_db14";
+$dbname = "db";
 // REPLACE with Database user
-$username = "web290_14";
+$username = "db user";
 // REPLACE with Database user password
-$password = "swint145qAwSeD";
+$password = "pw";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
