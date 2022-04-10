@@ -1,14 +1,14 @@
 /PHP script to post data to server
 <?php
 
-$servername = "s138.goserver.host";
+$servername = "server";
 
 // REPLACE with your Database name
-$dbname = "web290_db14";
+$dbname = "db";
 // REPLACE with Database user
-$username = "web290_14";
+$username = "db user";
 // REPLACE with Database user password
-$password = "swint145qAwSeD";
+$password = "pw";
 
 // Keep this API Key value to be compatible with the ESP32 code. If you change this value here, the ESP32 sketch needs to match
 $api_key_value = "tPmAT5Ab3j7F9";
