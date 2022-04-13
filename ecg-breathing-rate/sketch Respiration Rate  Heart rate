@@ -1,0 +1,83 @@
+#include "protocentralAds1292r.h"
+#include "ecgRespirationAlgo.h"
+#include <SPI.h>
+
+volatile uint8_t globalHeartRate;
+volatile uint8_t globalRespirationRate=0;
+
+const int ADS1292_DRDY_PIN = 25;
+const int ADS1292_CS_PIN = 5;
+const int ADS1292_START_PIN = 33;
+const int ADS1292_PWDN_PIN = 32;
+
+int16_t ecgWaveBuff, ecgFilterout;
+int16_t resWaveBuff,respFilterout;
+
+long timeElapsed=0;
+
+ads1292r ADS1292R;
+ecg_respiration_algorithm ECG_RESPIRATION_ALGORITHM;
+
+void setup()
+{
+  delay(2000);
+
+  SPI.begin();
+  SPI.setBitOrder(MSBFIRST);
+  //CPOL = 0, CPHA = 1
+  SPI.setDataMode(SPI_MODE1);
+  // Selecting 1Mhz clock for SPI
+  SPI.setClockDivider(SPI_CLOCK_DIV16);
+
+  pinMode(ADS1292_DRDY_PIN, INPUT);
+  pinMode(ADS1292_CS_PIN, OUTPUT);
+  pinMode(ADS1292_START_PIN, OUTPUT);
+  pinMode(ADS1292_PWDN_PIN, OUTPUT);
+  Serial.begin(57600);
+
+  ADS1292R.ads1292Init(ADS1292_CS_PIN,ADS1292_PWDN_PIN,ADS1292_START_PIN);  //initalize ADS1292 slave
+  Serial.println("Initiliziation is done");
+}
+
+void loop()
+{
+  ads1292OutputValues ecgRespirationValues;
+  boolean ret = ADS1292R.getAds1292EcgAndRespirationSamples(ADS1292_DRDY_PIN,ADS1292_CS_PIN,&ecgRespirationValues);
+
+  if (ret == true)
+  {
+    ecgWaveBuff = (int16_t)(ecgRespirationValues.sDaqVals[1] >> 8) ;  // ignore the lower 8 bits out of 24bits
+    resWaveBuff = (int16_t)(ecgRespirationValues.sresultTempResp>>8) ;
+
+    if(ecgRespirationValues.leadoffDetected == false)
+    {
+      ECG_RESPIRATION_ALGORITHM.ECG_ProcessCurrSample(&ecgWaveBuff, &ecgFilterout);   // filter out the line noise @40Hz cutoff 161 order
+      ECG_RESPIRATION_ALGORITHM.QRS_Algorithm_Interface(ecgFilterout,&globalHeartRate);// calculate
+      
+      //disable below 2 lines if you want to run with arduino uno. (arduino uno does not have the memory to do all processing together)
+      respFilterout = ECG_RESPIRATION_ALGORITHM.Resp_ProcessCurrSample(resWaveBuff);
+      ECG_RESPIRATION_ALGORITHM.RESP_Algorithm_Interface(respFilterout,&globalRespirationRate);
+
+    }else{
+
+      ecgFilterout = 0;
+      respFilterout = 0;
+    }
+
+    if(millis() > timeElapsed)  // update every one second
+    {
+      if(ecgRespirationValues.leadoffDetected == true) // lead in not connected
+      {
+        Serial.println("ECG lead error!!! ensure the leads are properly connected");
+      }else{
+
+        Serial.print("Heart rate: ");
+        Serial.print(globalHeartRate);
+        Serial.println("BPM");
+        Serial.print("Respiration Rate :");
+        Serial.println(globalRespirationRate);
+      }
+      timeElapsed += 1000;
+    }
+  }
+ }
