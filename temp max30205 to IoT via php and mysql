@@ -1,0 +1,103 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+//
+//    Arduino example for the MAX30205 body temperature sensor breakout board
+//
+//    Author: Ashwin Whitchurch
+//    Copyright (c) 2018 ProtoCentral
+//
+//    This software is licensed under the MIT License(http://opensource.org/licenses/MIT).
+//
+//   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+//   NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+//   IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//   WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+//   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//   For information on how to use, visit https://github.com/protocentral/ProtoCentral_MAX30205
+/////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+
+This program Print temperature on terminal
+
+Hardware Connections (Breakoutboard to Arduino):
+Vin  - 5V (3.3V is allowed)
+GND - GND
+SDA - A4 (or SDA)
+SCL - A5 (or SCL)
+*/
+#include <WiFi.h>
+#include <HTTPClient.h>
+
+#include <Wire.h>
+#include "Protocentral_MAX30205.h"
+MAX30205 tempSensor;
+
+// Replace with your network credentials
+const char* ssid     = "WLAN1-000727";
+const char* password = "swint145!";
+
+// REPLACE with your Domain name and URL path or IP address with path
+const char* serverName = "https://immanueltenebris.org/post-data_updated.php";
+
+// Keep this API Key value to be compatible with the PHP code provided in the project page. 
+// If you change the apiKeyValue value, the PHP file /post-data.php also needs to have the same key 
+String apiKeyValue = "tPmAT5Ab3j7F9";
+
+void setup() {
+  // put your setup code here, to run once:
+  Wire.begin();
+  Serial.begin(9600);
+
+  WiFi.begin(ssid, password);
+  Serial.println("Connecting");
+  while(WiFi.status() != WL_CONNECTED) { 
+      delay(500);
+      Serial.print(".");
+      }
+  Serial.println("");
+  Serial.print("Connected to WiFi network with IP Address: ");
+  Serial.println(WiFi.localIP());
+  
+  tempSensor.begin();   // set continuos mode, active mode
+}
+
+void loop() {
+
+	float temp = tempSensor.getTemperature(); // read temperature for every 100ms
+	Serial.print(temp ,2);
+	Serial.println("'c" );
+
+  //Check WiFi connection status
+  if(WiFi.status()== WL_CONNECTED){
+    HTTPClient http;
+    
+    // Your Domain name with URL path or IP address with path
+    http.begin(serverName);
+    
+    // Specify content-type header
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    
+    // Prepare your HTTP POST request data
+    String httpRequestData = "api_key=" + apiKeyValue + "&value1=" + String(temp) + "";
+
+    // Send HTTP POST request
+    int httpResponseCode = http.POST(httpRequestData);
+
+    if (httpResponseCode>0) {
+      Serial.print("HTTP Response code: ");
+      Serial.println(httpResponseCode);
+      }
+    else {
+      Serial.print("Error code: ");
+      Serial.println(httpResponseCode);
+      }
+    // Free resources
+    http.end();
+  }
+
+  else {
+    Serial.println("WiFi Disconnected");
+    }
+	delay(1000);
+}
