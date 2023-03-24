@@ -1,0 +1,151 @@
+#include <DFRobot_MAX30102.h>
+
+DFRobot_MAX30102 particleSensor;
+
+  int Red;
+  int Redsafed = 1;
+  int redMax = 1;
+  int Redmaxtemp = 1;
+  float pulse;
+
+  float average;
+  float newValue;
+  float result;
+  const float strength = 0.97; 
+
+
+
+
+void setup() {
+  // put your setup code here, to run once:
+
+
+
+    //Init serial 
+  Serial.begin(115200);
+  /*!
+   *@brief Init sensor 
+   *@param pWire IIC bus pointer object and construction device, can both pass or not pass parameters (Wire in default)
+   *@param i2cAddr Chip IIC address (0x57 in default)
+   *@return true or false
+   */
+  while (!particleSensor.begin()) {
+    Serial.println("MAX30102 was not found");
+    delay(1000);
+  }
+
+  /*!
+   *@brief Use macro definition to configure sensor
+   *@param ledBrightness LED brightness, default value: 0x1F（6.4mA), Range: 0~255（0=Off, 255=50mA）
+   *@param sampleAverage Average multiple samples then draw once, reduce data throughput, default 4 samples average
+   *@param ledMode LED mode, default to use red light and IR at the same time 
+   *@param sampleRate Sampling rate, default 400 samples every second 
+   *@param pulseWidth Pulse width: the longer the pulse width, the wider the detection range. Default to be Max range
+   *@param adcRange Measurement Range, default 4096 (nA), 15.63(pA) per LSB
+   */
+  particleSensor.sensorConfiguration(/*ledBrightness=*/0x1F, /*sampleAverage=*/SAMPLEAVG_4, \
+                                  /*ledMode=*/MODE_MULTILED, /*sampleRate=*/SAMPLERATE_400, \
+                                  /*pulseWidth=*/PULSEWIDTH_411, /*adcRange=*/ADCRANGE_4096);
+}
+
+
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+
+
+
+// DC Filter
+
+
+ float newValue = (float) particleSensor.getRed();
+  average = (strength * average) + ((1.0-strength) * newValue);
+  float result = newValue - average;
+
+pulse =  (float) particleSensor.getRed() - average;
+
+  newValue = (float) particleSensor.getRed();
+  average = (strength * average) + ((1.0-strength) * newValue);
+  result = newValue - average;
+
+      //Serial.println(result); 
+  
+
+
+//DC Filter Ende
+
+//Speichern von Peakmax//
+
+Red = pulse; //gefilterter Rotwert
+
+
+while (Red > 0);
+
+//Wenn Red größer ist als Null startet ein Durchgang; 
+
+
+  {
+
+    if (Red > Redsafed) //Wenn Red größer ist als der gespeicherte Rotwert, dann wird der Rotwert gespeichert und zu 0 zurückgekehrt
+    {
+    Redsafed = Red;
+    }
+  
+  else 
+  
+  // Wenn der Red kleiner ist als der gespeicherte Rotwert, dann wird der Rotwert als Maxwert gesetzt, wenn er größer ist als der Redmaxtemp
+
+     {
+ 
+
+        if (Redsafed > Redmaxtemp)
+
+         { 
+           
+           Redmaxtemp = Redsafed; 
+         
+         }       
+
+              else //Wenn der Red kleiner ist als der gespeicherte Rotwert, dann wird der Rotwert nicht als Maxwert gesetzt, wenn er kleiner ist als Redmaxtemp
+
+               {   
+  
+                  if (Red > 0 )  //Wenn der Red kleiner ist als der gespeicherte Rotwert und der Red kleiner ist als 0; Dann ist der Durchlauf beendet und der Redmaxtemp ist der RedMax
+                        //Redsafed wird auf 1 gesetzt, sowie der Redmaxtemp, für den nächsten Durchgang
+
+                   {    
+                  redMax = Redmaxtemp;
+                  Redsafed = 1; 
+                  Redmaxtemp = 1; 
+
+                  Serial.println(redMax);
+                  
+                  }
+
+                  else 
+
+                  {
+                  }
+
+               }
+   
+     }
+  }
+}
+
+
+//Speichern von Peakmax Ende//
+
+  
+
+
+   
+
+
+   
+
+  
+  
+  
+
