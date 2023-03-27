@@ -1,0 +1,116 @@
+#include <DFRobot_MAX30102.h>
+
+DFRobot_MAX30102 particleSensor;
+
+float Signalmax = 1;
+float Signalpeak = 1;
+float DC;
+float AC;
+float Summeinterwall = 0;
+float Signal; 
+float Durchgang;
+float Perfusionsindex;
+float Signalmin;
+float Interwalldurchschnitt;
+unsigned long  previousMillis = 0;
+void setup() {
+
+  Serial.begin(115200);
+  /*!
+   *@brief Init sensor 
+   *@param pWire IIC bus pointer object and construction device, can both pass or not pass parameters (Wire in default)
+   *@param i2cAddr Chip IIC address (0x57 in default)
+   *@return true or false
+   */
+  while (!particleSensor.begin()) {
+    Serial.println("MAX30102 was not found");
+    delay(1000);
+  }
+
+  /*!
+   *@brief Use macro definition to configure sensor
+   *@param ledBrightness LED brightness, default value: 0x1F（6.4mA), Range: 0~255（0=Off, 255=50mA）
+   *@param sampleAverage Average multiple samples then draw once, reduce data throughput, default 4 samples average
+   *@param ledMode LED mode, default to use red light and IR at the same time 
+   *@param sampleRate Sampling rate, default 400 samples every second 
+   *@param pulseWidth Pulse width: the longer the pulse width, the wider the detection range. Default to be Max range
+   *@param adcRange Measurement Range, default 4096 (nA), 15.63(pA) per LSB
+   */
+  particleSensor.sensorConfiguration(/*ledBrightness=*/0x1F, /*sampleAverage=*/SAMPLEAVG_4, \
+                                  /*ledMode=*/MODE_MULTILED, /*sampleRate=*/SAMPLERATE_400, \
+                                  /*pulseWidth=*/PULSEWIDTH_411, /*adcRange=*/ADCRANGE_4096);
+}
+
+
+
+void loop() {
+ // function1
+
+Signal = (particleSensor.getRed());
+
+ unsigned long currentMillis = millis(); 
+ const long interval = 2000; 
+
+
+  if (currentMillis - previousMillis <= interval) 
+  
+  {  
+
+    // Serial.print("im Interwall");
+    // Serial.print("Zeit =");
+    // Serial.print(currentMillis);
+    // Serial.print('\n');
+
+    if (Signal > Signalmax) { Signalmax = Signal; }
+    if (Signal < Signalmin) { Signalmin = Signal; }
+
+    Summeinterwall = Summeinterwall + Signal;
+    Durchgang = Durchgang + 1;
+
+    //Serial.print("Summeinterwall = ");
+    //Serial.print(Summeinterwall);  
+    Serial.print("Durchgang = ");
+    Serial.print(Durchgang);
+    //Serial.print('\n');
+    
+  }
+
+  else
+
+  { 
+
+    // Serial.print("Interwall abgelaufen");
+    // Serial.print('\n');
+
+    Serial.print("Signalmax = ");
+    Serial.print(Signalmax);
+
+    Interwalldurchschnitt = (Summeinterwall/Durchgang); 
+ 
+
+    AC = (Signalmax - Interwalldurchschnitt)*2;
+    Serial.print("AC = ");
+    Serial.print(AC);
+    Serial.print('\n');
+
+    DC= Signalmax-AC;
+    Serial.print("DC = ");
+    Serial.print(DC);
+    Serial.print('\n');
+
+
+    Perfusionsindex = (AC/DC)*100;
+    Serial.print("Perfusionsindex");
+    Serial.print(Perfusionsindex);
+    Serial.print('\n');
+
+    Signalmax = 1; Summeinterwall = 1; Durchgang = 0;
+
+    previousMillis = currentMillis; 
+    //Serial.print("Aktuelle Zeit auf vorherige gesetzt =");
+    Serial.print(previousMillis); 
+    //Serial.print('\n');
+    
+    }
+
+}
