@@ -1,0 +1,89 @@
+#include <Wire.h>
+
+#include "MAX30105.h"
+
+MAX30105 particleSensor;
+
+#define debug Serial //Uncomment this line if you're using an Uno or ESP
+
+//#define debug SerialUSB //Uncomment this line if you're using a SAMD21
+
+class ZyklusSPO2 { // Definition der Klasse ZyklusSPO2
+
+public:
+
+const long interval = 10000;
+
+float total_per_cycle = 0;
+
+unsigned long previousMillis = 0;
+
+unsigned int cycle = 0;
+
+float average() ;
+
+float average_per_cycle = 0;
+
+};
+
+float ZyklusSPO2::average() {
+
+unsigned long currentMillis = millis();
+
+if (currentMillis - previousMillis <= interval) {
+
+total_per_cycle = total_per_cycle + particleSensor.getRed();
+
+cycle = cycle + 1;
+
+} else if (cycle > 0) {
+
+average_per_cycle = total_per_cycle/cycle;
+
+cycle = 0;
+
+total_per_cycle = 0;
+
+previousMillis = currentMillis;
+
+}
+
+return average_per_cycle; // liefert den letzten errechneten Wert zurück
+
+}
+
+ZyklusSPO2 erstesObjekt; //Erzeugt ein erstes Objekt der Klasse ZyklusSPO2
+
+}
+
+void setup()
+
+{
+
+debug.begin(9600);
+
+debug.println("MAX30105 Basic Readings Example");
+
+// Initialize sensor
+
+if (particleSensor.begin() == false)
+
+{
+
+debug.println("MAX30105 was not found. Please check wiring/power. ");
+
+while (1);
+
+}
+
+particleSensor.setup(); //Configure sensor. Use 6.4mA for LED drive
+
+}
+
+void loop()
+
+{
+
+Serial.print("Durchschnitt pro Zyklus:");
+
+Serial.print(erstesObjekt.average_per_cycle);
