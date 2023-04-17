@@ -86,4 +86,4 @@ void loop()
 
 Serial.print("Durchschnitt pro Zyklus:");
 
-Serial.print(erstesObjekt.average_per_cycle);
+Serial.print(erstesObjekt.average());
