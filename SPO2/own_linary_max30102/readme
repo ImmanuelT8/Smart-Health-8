@@ -1,0 +1,4 @@
+Das Programm errechnet über einen Zeitinterwall den AC und DC vom MAX30102. Sowohl rot als auch IR. 
+Zudem wird der Perfusionsindex vom IR und Rotwert errechnet und anschließend der SPO2 Wert. 
+
+Die Funktionen zum Berechnen finden sich in der filters Libary. Der R und SPO2 Wert wird anschließend im Hauptprogramm errechnet. 
