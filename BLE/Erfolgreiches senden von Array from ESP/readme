@@ -1,0 +1,25 @@
+Der ESP 32 schickt ein Array über 100 Einträge an das Python Programm, dort lauscht das Programm und bekommt mit dem Array auch eine Notification. Dies ist hier zu sehen:
+
+sync def read_spo2(address):
+    SPO2_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8"
+    async with BleakClient(address) as client:
+        await client.start_notify(SPO2_UUID, notification_handler)
+        # Wait for notifications
+        while True:
+            await asyncio.sleep(1)
+
+async def notification_handler(sender, data):
+    spo2_value = int.from_bytes(data, byteorder='little')
+    print("SPO2: {0}".format(spo2_value))
+
+Alternativ ist im Kommentar auch der Code dass er alle 1 Sekunden des ESP abfragt:
+
+# async def read_spo2(address):
+#    SPO2_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8"
+#    async with BleakClient(address) as client:
+#        while True:  # run in an infinite loop
+#           spo2_data = await client.read_gatt_char(SPO2_UUID)
+#           print("SPO2: {0}".format(spo2_value))
+#           await asyncio.sleep(1)  # wait for 1 second
+
+Die Pyhon App druckt dann alles in einer Wurscht. 
