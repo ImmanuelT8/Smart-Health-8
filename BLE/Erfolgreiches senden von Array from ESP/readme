@@ -69,5 +69,9 @@ In der Version Liste mit verschobenen Tabelen wird nun eine Liste erstellt, jedo
 
 Das Prog: "Erste_Tabelle_als_txt_gespeichert_Name_Datum.py" speichert dies so in eine txt Datei mit dem Namen des Datums und der Zeit. 
 
+korrektes_speichern_raw_ir_and_red_excel.py Speichert die Daten korrekt im Excel
 
+Red raw     IR raw
+232         324324
+3243242     32324
 
