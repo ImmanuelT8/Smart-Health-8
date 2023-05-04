@@ -87,3 +87,4 @@ Wert 1  Wert2
         324324
         3242
 
+In der Version "mit Schleife" werden die Daten nicht nur einmal ausgegeben sondern immer wieder sobald 100 Daten empfangen wurden. 
