@@ -76,7 +76,7 @@ class BLEThread(threading.Thread):
 
         # wenn alle Werte empfangen wurden, erstelle einen Pandas DataFrame und gib ihn aus
         if len(ir_list) == 100:
-            pythonDaten2 = pd.DataFrame(spo2_list)
+            pythonDaten2 = pd.DataFrame(ir_list)
             print(pythonDaten2.head())
             wb.save(filename)
 
