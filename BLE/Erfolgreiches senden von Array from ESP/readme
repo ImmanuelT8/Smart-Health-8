@@ -77,4 +77,13 @@ Red raw     IR raw
 
 Korrektes Speichern in Excel File speichert die Daten korrekt, zuvor hatte ich die gleichen Werte doppelt gespeichert!! Wobei hier die Einträge überschrieben werden.
 
+Speichert_erfolgre_in_Excel_nur_mit_leer 
+
+Speichert in eine Excel Datei nur ist jeweils der Gegenüberliegende Teil leer
+
+Wert 1  Wert2
+324
+324    
+        324324
+        3242
 
