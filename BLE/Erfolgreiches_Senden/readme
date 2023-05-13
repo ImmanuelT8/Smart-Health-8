@@ -1,0 +1,2 @@
+Das Programm Array_an_ESP.py sendet ein Array an den ESP von 4 Variablen. Die erste Variable ist der Wert 5, der auf dem Index 0 liegt. 
+Der ESP empfängt diese Variable und setzt diese auf eine Variable des Typs int. Ist die Variable 0, so ist die interne LED OFF, ist sie 5 so ist sie on. 
