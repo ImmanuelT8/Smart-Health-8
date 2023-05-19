@@ -1,0 +1,37 @@
+Die notwendigen Bibliotheken werden importiert. pandas wird zur Erstellung und Verwaltung von DataFrames verwendet, asyncio für die asynchrone Ausführung, threading zur Verwendung von Threads, tkinter für die Erstellung des GUI-Fensters, bleak für die BLE-Kommunikation und numpy für die Arbeit mit Arrays.
+
+Es wird die Adresse des BLE-Geräts angegeben, mit dem eine Verbindung hergestellt werden soll, sowie die UUIDs für den Zugriff auf die Charakteristiken.
+
+Eine Tabelle (PrettyTable) wird erstellt, um die empfangenen Daten anzuzeigen.
+
+Das aktuelle Datum und die Uhrzeit werden abgerufen und in einem bestimmten Format gespeichert.
+
+Der Name der Excel-Datei wird basierend auf dem Datum und der Uhrzeit erstellt.
+
+Ein leeres DataFrame (df) wird erstellt, um die Daten zu speichern.
+
+Listen (spo2_list, ir_list) werden initialisiert, um die empfangenen Daten zwischenspeichern zu können.
+
+Eine Funktion print_table() wird definiert, um die Tabelle auf der Konsole auszugeben.
+
+Die Klasse BLEThread wird erstellt, die von der Klasse threading.Thread erbt. Diese Klasse wird verwendet, um die BLE-Kommunikation in einem separaten Thread auszuführen.
+
+In der Methode handle_uuid1_notify werden die empfangenen Daten der Charakteristik mit der UUID1 (Red) verarbeitet. Die Daten werden in die Tabelle eingefügt und zur späteren Verwendung in der spo2_list gespeichert.
+
+In der Methode handle_uuid2_notify werden die empfangenen Daten der Charakteristik mit der UUID2 (IR) verarbeitet. Die Daten werden in die Tabelle eingefügt und zur späteren Verwendung in der ir_list gespeichert. Wenn sowohl die spo2_list als auch die ir_list jeweils 100 Werte erreicht haben, wird ein Pandas DataFrame erstellt und in eine Excel-Datei geschrieben.
+
+Die Methode read_data wird verwendet, um die BLE-Verbindung herzustellen und Daten von den Charakteristiken zu lesen. Dabei werden die Methoden handle_uuid1_notify und handle_uuid2_notify als Callbacks für die Benachrichtigungen registriert.
+
+Die Methode run wird aufgerufen, um den BLE-Thread auszuführen.
+
+Die Klasse TkinterThread wird erstellt, um das GUI-Fenster in einem separaten Thread auszuführen.
+
+Die Methode run der TkinterThread-Klasse wird aufgerufen, um das GUI-Fenster anzuzeigen.
+
+Die Funktion start_threads wird definiert, um sowohl den BLE-Thread als auch den Tkinter-Thread zu starten.
+
+Der Code wird gestartet, indem start_threads aufgerufen wird.
+
+Der Programmfluss bleibt in einer Schleife, bis first_run auf False gesetzt wird. Dies geschieht, um den Code nach dem Starten der Threads nicht erneut auszuführen.
+
+Das Programm arbeitet mit Threads, um die BLE-Kommunikation und die GUI-Aktualisierung gleichzeitig ausführen zu können. Die BLE-Daten werden in einer Tabelle angezeigt und in einer Excel-Datei gespeichert.
