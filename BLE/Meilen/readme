@@ -1,0 +1,17 @@
+Programm 2 
+
+Importieren der benötigten Module und Bibliotheken.
+Definieren der Variablen und Konstanten, die für die Kommunikation mit dem ESP32-Gerät verwendet werden sollen.
+Definieren einer Worker-Klasse, die ein QThread-Objekt ist. Diese Klasse ist für die asynchrone Kommunikation mit dem ESP32-Gerät zuständig.
+Die Worker-Klasse enthält Signale (completed, received), die bei bestimmten Ereignissen emittiert werden.
+Die run-Methode der Worker-Klasse wird überschrieben und enthält den Code, der die Kommunikation mit dem ESP32-Gerät ausführt. Es werden Werte an das Gerät gesendet und Daten vom Gerät empfangen.
+Die connect_client- und disconnect_client-Methoden werden verwendet, um eine Verbindung zum Gerät herzustellen bzw. zu trennen.
+Die MainWindow-Klasse erbt von QMainWindow und dient als Hauptfenster der Anwendung.
+Im Konstruktor der MainWindow-Klasse werden das Fensterlayout und die GUI-Elemente (Labels, Textfelder, Fortschrittsbalken, Button) erstellt und konfiguriert.
+Es wird ein Worker-Objekt erstellt, das für die Kommunikation mit dem ESP32-Gerät zuständig ist.
+Die start-Methode wird aufgerufen, wenn der Button "Parameter updaten" geklickt wird. Sie aktualisiert die Werte der Variablen basierend auf den Eingaben des Benutzers, startet den Worker-Thread und den Fortschritts-Timer.
+Die complete-Methode wird aufgerufen, wenn der Worker-Thread abgeschlossen ist. Sie aktualisiert den Fortschrittsbalken und aktiviert den Button.
+Der Fortschritts-Timer wird gestartet und ruft die update_progress-Methode regelmäßig auf, um den Fortschrittsbalken zu aktualisieren.
+Die update_status-Methode wird aufgerufen, wenn Daten vom ESP32-Gerät empfangen werden. Sie aktualisiert das Statuslabel mit den empfangenen Daten.
+Die QApplication wird gestartet und das Hauptfenster wird angezeigt.
+Das Programm ermöglicht es dem Benutzer, verschiedene Parameter einzugeben und an ein ESP32-Gerät zu senden. Der Fortschritt des Sendevorgangs wird mit einem Fortschrittsbalken angezeigt, und die empfangenen Daten werden im Statuslabel angezeigt.
