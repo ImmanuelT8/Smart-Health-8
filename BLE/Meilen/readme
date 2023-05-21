@@ -15,3 +15,15 @@ Der Fortschritts-Timer wird gestartet und ruft die update_progress-Methode regel
 Die update_status-Methode wird aufgerufen, wenn Daten vom ESP32-Gerät empfangen werden. Sie aktualisiert das Statuslabel mit den empfangenen Daten.
 Die QApplication wird gestartet und das Hauptfenster wird angezeigt.
 Das Programm ermöglicht es dem Benutzer, verschiedene Parameter einzugeben und an ein ESP32-Gerät zu senden. Der Fortschritt des Sendevorgangs wird mit einem Fortschrittsbalken angezeigt, und die empfangenen Daten werden im Statuslabel angezeigt.
+
+Programme:
+
+##### 1.ino #####
+
+1.ino ist ein ESP Programm im C++ das zusammen mit einer Python App bei einem MAX30102 am ESP die Parameter updatet. 
+
+##### 2_GUI_Parameter_update_funkt.py #####
+
+2 GUI funkt ist die Python GUI die als App die Daten an den ESP sendet, zusammen mit 1.ino auf dem ESP. 
+
+
