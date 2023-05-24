@@ -54,11 +54,7 @@ class Worker(QThread):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
 
-          # Initialisierung des Textparameters
-        self.Parameter_Update_Text = Parameter_Update_Text
-
-         # Initialisierung des Textparameters
-        self.Parameter_Update_Text.setText("")
+   
 
 
         async def do_work():
