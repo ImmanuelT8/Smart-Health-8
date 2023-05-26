@@ -64,11 +64,9 @@ plotter_window = QMainWindow()
 plotter_window_ui = uic.loadUi("plotter_window.ui")
 plotter_window.setCentralWidget(plotter_window_ui)
 
-
 # Speichern Sie eine Referenz auf den aktuellen Worker-Thread
 current_worker = None
 current_worker_data_array = None
-
 
 # Werte definieren
 Variable1 = 50
@@ -100,99 +98,6 @@ spo2_list = []
 ir_list = []
 
 first_run = True
-
-class WorkerDatenArray(QThread):
-    completed = pyqtSignal()
-    received = pyqtSignal(str)
-
-    def __init__(self, address):
-        super().__init__()
-        self.address = address
-
-    async def handle_uuid1_notify(self, sender, data):
-        spo2_values = numpy.frombuffer(data, dtype=numpy.uint32)
-        print("Red: {0}".format(spo2_values))
-
-        for spo2_value in spo2_values:
-            table.add_row([spo2_value, ""])
-            spo2_list.append(spo2_value)
-
-    async def handle_uuid2_notify(self, sender, data):
-        ir_values = numpy.frombuffer(data, dtype=numpy.uint32)
-        print("IR: {0}".format(ir_values))
-        
-        for ir_value in ir_values:
-            if ir_value:
-                table.add_row(["", ir_value])
-                ir_list.append(ir_value)
-
-            if len(spo2_list) == 100 and len(ir_list) == 100:
-                global df, first_run
-
-                new_data_available = True
-
-                if first_run:
-                    df = pd.DataFrame({'Red': spo2_list, 'IR': ir_list})
-                    df.to_excel(filename, index=False)
-                else:
-                    new_data = pd.DataFrame({'Red': spo2_list, 'IR': ir_list})
-                    df = pd.concat([df, new_data], ignore_index=True)
-                    df.to_excel(filename, index=False)
-
-                    print(df.head())
-
-                spo2_list.clear()
-                ir_list.clear()
-
-    async def read_data(self):
-        UUID1 = "beb5483e-36e1-4688-b7f5-ea07361b26a8"
-        UUID2 = "beb5483e-36e1-4688-b7f5-ea07361b26a9"
-        print("read data start")
-
-        async with bleak.BleakClient(self.address) as client:
-            print("async bleak läuft")
-            services = await client.get_services()
-            for service in services:
-                characteristics = service.characteristics
-                for characteristic in characteristics:
-                    if characteristic.uuid == UUID1:
-                        await client.start_notify(characteristic.handle, self.handle_uuid1_notify)
-                    elif characteristic.uuid == UUID2:
-                        await client.start_notify(characteristic.handle, self.handle_uuid2_notify)
-            while True:
-                await asyncio.sleep(1)
-
-    async def connect_client(self, client):
-        print("connect client gestartet")
-        await client.connect()
-
-    async def disconnect_client(self, client):
-        await client.disconnect()
-
-    async def do_work(self):
-        try:
-            def print_table():
-                print(table)
-
-            self.received.emit("Suche Gerät")  # Text "Suche Geräte" anzeigen
-            print("Suche Gerät")
-
-            client = bleak.BleakClient(mac_address)
-            await self.connect_client(client)  # Verbindung herstellen
-            print("vor read")
-            await self.read_data()
-
-        except Exception as e:
-            Start.setEnabled(True)
-            print("Nicht verbunden")
-            Main_Connect_Text.setStyleSheet("color: red;")
-            self.received.emit("Gerät nicht gefunden")  # Text "Gerät nicht gefunden" anzeigen
-
-    def run(self):
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(self.do_work())
-        loop.close()
-        self.completed.emit()
 
 # Klasse für das Updaten des ESP
 class Worker(QThread):
@@ -325,6 +230,8 @@ class Worker_Daten_Array(QThread):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
 
+  
+
         async def do_work():
 
              try:
@@ -334,7 +241,7 @@ class Worker_Daten_Array(QThread):
 
                 self.received.emit("Suche Gerät")  # Text "Suche Geräte" anzeigen
                 print("Suche Gerät")
-
+                
                 #def run_read_data(self):
                     #asyncio.run(read_data(self))
 
@@ -347,9 +254,6 @@ class Worker_Daten_Array(QThread):
                 print("vor read")
                # run_read_data(self)
                 await self.read_data()
-
-
-       
 
              except Exception as e:
                  Start.setEnabled(True)
@@ -366,8 +270,7 @@ class Worker_Daten_Array(QThread):
 
     async def disconnect_client(self, client):
         await client.disconnect()
-
-
+        
 def update_progress(progress_bar):
     current_value = progress_bar.value()
     if current_value < progress_bar.maximum():
@@ -390,7 +293,7 @@ def Start_clicked():
     current_worker_data_array = Worker_Daten_Array(mac_address)
     current_worker_data_array.received.connect(Main_Connect_Text.setText)  # Verbinden Sie das Signal mit der Methode setText()
     current_worker_data_array.start()
-  
+
 
 def Plotter_clicked():
     print("Plotter Button wurde gedrückt")
