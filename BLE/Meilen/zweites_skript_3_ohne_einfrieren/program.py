@@ -332,8 +332,38 @@ class PruefeDateinameThread(QThread):
         loop.close()
         self.finished.emit(True)
 
-    async def pruefe_dateiname(self, dateiname):
-        # Ihre asynchrone Logik hier
+    async def pruefe_dateiname(self, Dateiname):
+        
+
+        
+        from safe_to_excel import Dateiname
+
+
+
+        if Dateiname == 0:
+            safe_to_excel.start_threads()
+        
+
+        else:
+            Start.setEnabled(False)
+            Stopp.setEnabled(True)
+            Plotter.setEnabled(True)
+            Trainiere.setEnabled(True)
+
+        await asyncio.sleep(17)  # 30 Sekunden warten
+        from safe_to_excel import Dateiname
+
+
+        print (Dateiname)
+        if Dateiname != 0:
+            print ("Datei angelegt")
+            Start.setEnabled(False)
+            Stopp.setEnabled(True)
+            Plotter.setEnabled(True)
+            Trainiere.setEnabled(True)
+        else:
+            Start.setEnabled(True)
+
 
         await asyncio.sleep(5)  # Beispiel: 5 Sekunden warten
         # Führen Sie Ihre Überprüfungen durch und senden Sie das Ergebnis zurück
@@ -395,8 +425,7 @@ def on_safe_to_excel_completed():
 
 async def pruefe_dateiname(Dateiname):
 
-    await asyncio.sleep(10)  # 30 Sekunden warten
-
+   
     
     if Dateiname == 0:
         safe_to_excel.start_threads()
