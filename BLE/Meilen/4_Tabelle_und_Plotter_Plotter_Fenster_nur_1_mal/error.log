@@ -1,0 +1,648 @@
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<BLEThread.handle_uuid2_notify() done, defined at C:\Users\emanu\source\repos\PythonApplication3\PythonApplication3\safe_to_excel.py:44> exception=UnboundLocalError("local variable 'filename_fix' referenced before assignment")>
+Traceback (most recent call last):
+  File "C:\Users\emanu\source\repos\PythonApplication3\PythonApplication3\safe_to_excel.py", line 63, in handle_uuid2_notify
+    df.to_excel(filename_fix, index=False)
+UnboundLocalError: local variable 'filename_fix' referenced before assignment
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<BLEThread.handle_uuid2_notify() done, defined at C:\Users\emanu\source\repos\PythonApplication3\PythonApplication3\safe_to_excel.py:42> exception=ValueError("Invalid file path or buffer object type: <class 'NoneType'>")>
+Traceback (most recent call last):
+  File "C:\Users\emanu\source\repos\PythonApplication3\PythonApplication3\safe_to_excel.py", line 61, in handle_uuid2_notify
+    df.to_excel(filename_fix, index=False)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\core\generic.py", line 2252, in to_excel
+    formatter.write(
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\formats\excel.py", line 934, in write
+    writer = ExcelWriter(  # type: ignore[abstract]
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\excel\_xlsxwriter.py", line 199, in __init__
+    super().__init__(
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\excel\_base.py", line 1219, in __init__
+    self._handles = get_handle(
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\common.py", line 716, in get_handle
+    ioargs = _get_filepath_or_buffer(
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\common.py", line 456, in _get_filepath_or_buffer
+    raise ValueError(msg)
+ValueError: Invalid file path or buffer object type: <class 'NoneType'>
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<BLEThread.handle_uuid2_notify() done, defined at C:\Users\emanu\source\repos\PythonApplication3\PythonApplication3\safe_to_excel.py:45> exception=ValueError("No engine for filetype: ''")>
+Traceback (most recent call last):
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\excel\_base.py", line 1111, in __new__
+    engine = config.get_option(f"io.excel.{ext}.writer", silent=True)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\_config\config.py", line 261, in __call__
+    return self.__func__(*args, **kwds)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\_config\config.py", line 135, in _get_option
+    key = _get_single_key(pat, silent)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\_config\config.py", line 121, in _get_single_key
+    raise OptionError(f"No such keys(s): {repr(pat)}")
+pandas._config.config.OptionError: No such keys(s): 'io.excel..writer'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\emanu\source\repos\PythonApplication3\PythonApplication3\safe_to_excel.py", line 66, in handle_uuid2_notify
+    df.to_excel(filename_fix, index=False)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\core\generic.py", line 2252, in to_excel
+    formatter.write(
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\formats\excel.py", line 934, in write
+    writer = ExcelWriter(  # type: ignore[abstract]
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\excel\_base.py", line 1115, in __new__
+    raise ValueError(f"No engine for filetype: '{ext}'") from err
+ValueError: No engine for filetype: ''
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<BLEThread.handle_uuid2_notify() done, defined at C:\Users\emanu\source\repos\PythonApplication3\PythonApplication3\safe_to_excel.py:45> exception=ValueError("No engine for filetype: ''")>
+Traceback (most recent call last):
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\excel\_base.py", line 1111, in __new__
+    engine = config.get_option(f"io.excel.{ext}.writer", silent=True)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\_config\config.py", line 261, in __call__
+    return self.__func__(*args, **kwds)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\_config\config.py", line 135, in _get_option
+    key = _get_single_key(pat, silent)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\_config\config.py", line 121, in _get_single_key
+    raise OptionError(f"No such keys(s): {repr(pat)}")
+pandas._config.config.OptionError: No such keys(s): 'io.excel..writer'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\emanu\source\repos\PythonApplication3\PythonApplication3\safe_to_excel.py", line 67, in handle_uuid2_notify
+    df.to_excel(filename, index=False)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\core\generic.py", line 2252, in to_excel
+    formatter.write(
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\formats\excel.py", line 934, in write
+    writer = ExcelWriter(  # type: ignore[abstract]
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\excel\_base.py", line 1115, in __new__
+    raise ValueError(f"No engine for filetype: '{ext}'") from err
+ValueError: No engine for filetype: ''
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<BLEThread.handle_uuid2_notify() done, defined at C:\Users\emanu\source\repos\PythonApplication3\PythonApplication3\safe_to_excel.py:45> exception=ValueError("No engine for filetype: ''")>
+Traceback (most recent call last):
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\excel\_base.py", line 1111, in __new__
+    engine = config.get_option(f"io.excel.{ext}.writer", silent=True)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\_config\config.py", line 261, in __call__
+    return self.__func__(*args, **kwds)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\_config\config.py", line 135, in _get_option
+    key = _get_single_key(pat, silent)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\_config\config.py", line 121, in _get_single_key
+    raise OptionError(f"No such keys(s): {repr(pat)}")
+pandas._config.config.OptionError: No such keys(s): 'io.excel..writer'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\emanu\source\repos\PythonApplication3\PythonApplication3\safe_to_excel.py", line 67, in handle_uuid2_notify
+    df.to_excel(filename, index=False)
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\core\generic.py", line 2252, in to_excel
+    formatter.write(
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\formats\excel.py", line 934, in write
+    writer = ExcelWriter(  # type: ignore[abstract]
+  File "C:\Users\emanu\miniconda34\lib\site-packages\pandas\io\excel\_base.py", line 1115, in __new__
+    raise ValueError(f"No engine for filetype: '{ext}'") from err
+ValueError: No engine for filetype: ''
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
+ERROR:root:Ein Fehler ist aufgetreten: %s
