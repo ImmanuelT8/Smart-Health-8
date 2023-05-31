@@ -1,1 +1,13 @@
 Plotten klappt mit aktualisieren der Daten DF aus safe to excel via Menü Datei >> Aktualisieren sowie mit F5 klappt, bezogen auf alle Daten beim Plot und die ersten, die letzten noch nicht. 
+
+Edit: Die letzten 100 Werte können so geplottet werden:
+
+  def update_button_plotter(self):
+
+        # Aktualisiere den Plot mit den neuen Daten
+        from safe_to_excel import df
+        spo2_list = df['Red'].tail(100).astype(float)  # Gibt die letzten 100 Werte aus
+        spo2_list.reset_index(drop=True, inplace=True)  # Setze den Index zurück
+        self.plot_item.setData(y=np.array(spo2_list))  # Aktualisiere die Daten des Graphen
+        #self.plot_item.setData(y=spo2_list)  # Aktualisiere die Daten des Graphen alle
+        print("Daten des DF in Plotter Modul")
