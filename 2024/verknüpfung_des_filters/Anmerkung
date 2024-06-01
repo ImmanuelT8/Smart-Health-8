@@ -1,0 +1,61 @@
+Es wurde in diesem File beim Drop Down Menü eine Textausgabe eingefügt, wenn sich der Filter verändert: (1)
+
+weiter wurde eine Funktion eingefügt bei der bei dem drucken auf den Button (Übernehmen) der ausgewählte Text einer Variable zugeordnet wird:
+
+        self.current_filter_IR = "no_filter"  # Standardeinstellung: kein Filter
+
+Dieser Wert wird beim klicken auf den Button übernehmen geändert. Hierzu wurde eine Verbindung zu dem Button hergestellt:
+
+self.filter_ir_fenster.pushButton.clicked.connect(self.apply_filters_IR)  # Verknüpfen des Buttons Update im Fenster IR Filter mit der Funktion die die Variable updatet
+
+Und folgende Funktion wird danach aufgerufen (2)
+
+---
+
+Ein Überschüssiger Code der nichts macht wurde entfernt.
+Die GUI wurde vereinfacht (im QT Designer), so dass nur mehr 2 Filter angezeigt werden (keiner und Mittelwert). 
+
+
+
+
+
+########
+
+1) 
+
+# Wenn sich die Comobox (Dropdown Menü) im Fenster IR Filter verändert, dann printet er den ausgewählten Filter
+
+
+class FilterIRWindow(filter_ir_base, filter_ir_ui):
+    def __init__(self):
+        super().__init__()
+        self.ui = uic.loadUi("filter_live_plotter_ir.ui")
+        self.setupUi(self)
+        self.filter_ir_comobox_1.currentIndexChanged.connect(self.comboBox_changed)
+
+    def comboBox_changed(self, index):
+        current_text = self.filter_ir_comobox_1.currentText()
+        if current_text == "Mittelwertfilter":
+            print("Mittelwertfilter ausgewählt für IR ")
+            # Hier kannst du die Daten mit dem Mittelwertfilter verarbeiten
+
+        if current_text == "Kein Filter":
+            print("Kein Filter ausgewählt für IR")
+            # Hier kannst du die Daten mit dem Mittelwertfilter verarbeiten
+
+
+########################
+
+2) def apply_filters_IR(self, index):
+
+        print("Update Button in IR Filter geklickt")
+        # Funktion zum Anwenden der ausgewählten Filter
+        current_text = self.filter_ir_fenster.filter_ir_comobox_1.currentText()
+
+        if current_text == "Mittelwertfilter":
+            self.current_filter_IR = "mean_filter"
+        else:
+            self.current_filter_IR = "no_filter"
+
+        print("Filter angewendet für IR:", self.current_filter_IR)
+
