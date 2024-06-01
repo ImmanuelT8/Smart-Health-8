@@ -1,0 +1,23 @@
+Importieren der Module:
+
+numpy für die Erzeugung und Handhabung von Arrays.
+smooth_data aus filter_modul, um die Daten zu glätten.
+time, um die Zeit zu messen und Verzögerungen zu implementieren.
+Funktion generate_random_data(size):
+
+Generiert ein Array von Zufallszahlen der Größe size.
+Funktion main():
+
+Initialisiert previous_remainder als None und setzt last_data_time auf die aktuelle Zeit.
+Eine Endlosschleife erzeugt in jeder Iteration neue Dummy-Daten:
+Die Anzahl der Rohdaten wird gezählt.
+Die aktuellen Rohdaten werden ausgegeben.
+Die aktuelle Zeit wird gemessen und die Zeitdifferenz zur letzten Iteration berechnet.
+Wenn die Zeitdifferenz größer als 1 Sekunde ist, wird previous_remainder auf None gesetzt und eine Nachricht ausgegeben.
+Die Dummy-Daten werden mit der Funktion smooth_data geglättet, wobei previous_remainder berücksichtigt wird.
+Die Rohdaten und die geglätteten Daten werden paarweise ausgegeben.
+Eine separate Schleife druckt übrig gebliebene Rohdaten.
+Die Anzahl der Rohdatenausgaben wird ausgegeben.
+Der remainder (die letzten beiden Datenpunkte) wird, wenn vorhanden, ausgegeben.
+Das Programm wartet 4 Sekunden, bevor neue Daten erzeugt werden.
+last_data_time wird auf die aktuelle Zeit aktualisiert und previous_remainder wird auf den aktuellen remainder gesetzt.
