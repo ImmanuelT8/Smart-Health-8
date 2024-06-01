@@ -1,0 +1,13 @@
+Es wurde nun die Variable für den Filter global definiert:
+
+current_filter_IR = "no_filter"
+
+
+Zudem wurde jetzt der aktuell ausgewählte Filter geprintet, wenn der Timer abgelaufen ist:
+
+    def timer_out(self):
+        global current_filter_IR
+        print("timer out")
+        if self.checkbox_state_ir:
+            print("Aktueller Filter", current_filter_IR)
+            self.update_plot_data()
