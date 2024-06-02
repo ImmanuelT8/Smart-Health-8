@@ -1,0 +1,3 @@
+Es wurde nun die Update Funktion augesplittet und eine if Bedingung eingebaut, wodurch 2 verschiedene Update Funktionen beim IR Wert aufgerufen werden, 
+je nachdem ob einer Filter aufgerufen wurde oder nicht. Wird keiner aufgerufen, so wird der alte Code genutzt, für den Filter muss nun die 
+Implementierung erfolgen. Zudem wurde die Update Funktion umbenannt. 
