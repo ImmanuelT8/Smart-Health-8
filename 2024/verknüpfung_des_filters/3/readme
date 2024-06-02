@@ -61,3 +61,68 @@ Zusammenfassung:
 Die Funktionalität zum Glätten von Daten mit einem Mittelwertfilter wurde implementiert.
 Der remainder der Daten wird verwendet, um die Glättung über mehrere Datenfenster hinweg konsistent zu halten.
 Die Methoden wurden entsprechend angepasst, um die geglätteten Daten korrekt zu plotten und anzuzeigen.
+
+
+#### Verwendung der remainder funktion ####
+
+Ja, die remainder-Werte (die letzten beiden Datenpunkte des vorherigen Arrays) werden an den Anfang des neuen Arrays angefügt, um eine kontinuierliche Glättung über mehrere Datenfenster hinweg zu ermöglichen. Dies stellt sicher, dass keine Daten verloren gehen und die Glättung konsistent bleibt, wenn neue Daten hinzukommen.
+
+Hier ist der Prozess im Detail:
+
+Initialisierung des previous_remainder:
+
+Beim ersten Aufruf von smooth_data ist previous_remainder None.
+Für nachfolgende Aufrufe wird der remainder des vorherigen Aufrufs übergeben.
+Konkatenation des previous_remainder mit dem neuen Datenarray:
+
+Falls previous_remainder nicht None ist, wird es an den Anfang des neuen Datenarrays angefügt.
+Dadurch enthält das Datenarray die letzten beiden Datenpunkte des vorherigen Arrays und die neuen Datenpunkte.
+Berechnung der geglätteten Daten:
+
+Für jedes Fenster von drei aufeinanderfolgenden Datenpunkten im erweiterten Datenarray wird der Mittelwert berechnet und der geglätteten Datenliste (smoothed_data) hinzugefügt.
+Extrahierung des remainder:
+
+Die letzten beiden Datenpunkte des erweiterten Datenarrays werden als remainder gespeichert und für den nächsten Aufruf von smooth_data verwendet.
+Hier ist der relevante Codeabschnitt nochmal im Detail:
+
+python
+Code kopieren
+import numpy as np
+
+def smooth_data(data, previous_remainder=None):
+    if previous_remainder is not None:
+        # Füge den previous_remainder an den Anfang des neuen Datenarrays an
+        data = np.concatenate((previous_remainder, data))
+
+    smoothed_data = []
+    # Speichere die letzten beiden Datenpunkte des erweiterten Arrays
+    remainder = data[-2:]
+
+    for i in range(len(data) - 2):
+        window = data[i:i + 3]
+        mean_value = np.mean(window)
+        smoothed_data.append(mean_value)
+
+    # Gib die geglätteten Daten und den remainder zurück
+    return smoothed_data, remainder
+Beispiel:
+Angenommen, das vorherige Array endete mit [4, 5, 6] und das neue Array beginnt mit [7, 8, 9].
+
+Beim ersten Aufruf:
+
+data = [1, 2, 3, 4, 5, 6]
+previous_remainder ist None
+smoothed_data = [2.0, 3.0, 4.0, 5.0]
+remainder = [5, 6]
+Beim zweiten Aufruf:
+
+data = [7, 8, 9]
+previous_remainder ist [5, 6]
+Das erweiterte Array ist [5, 6, 7, 8, 9]
+smoothed_data = [6.0, 7.0, 8.0]
+remainder = [8, 9]
+Dieser Prozess wird bei jedem Aufruf von smooth_data fortgesetzt, wobei der remainder des vorherigen Aufrufs verwendet wird, um eine konsistente Glättung zu gewährleisten
+
+------------------------ Anmerkung -----------------------------
+
+Wir müssen noch die Zeit der verschiedenen Arrays erfassen, damit die letzten Daten verworfen werden, wenn es zu lange dauert, bis das neue Array ankommt.
