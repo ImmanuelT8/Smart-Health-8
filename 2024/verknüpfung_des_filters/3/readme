@@ -1,0 +1,63 @@
+Änderungen und Anpassungen:
+1. Hinzufügen und Anpassen der smooth_data Funktion:
+Die Funktion smooth_data wurde definiert, um eine Sequenz von Datenpunkten zu glätten, indem für jedes Fenster von drei aufeinanderfolgenden Datenpunkten der Mittelwert berechnet wird.
+Die Funktion akzeptiert nun einen optionalen Parameter previous_remainder, der die letzten beiden Datenpunkte des vorherigen Arrays enthält und in das aktuelle Array integriert werden kann.
+Die Funktion gibt sowohl die geglätteten Daten (smoothed_data) als auch die letzten beiden Datenpunkte des verarbeiteten Arrays (remainder) zurück, die für den nächsten Durchlauf verwendet werden sollen.
+python
+Code kopieren
+# -*- coding: latin-1 -*-
+import numpy as np
+
+def smooth_data(data, previous_remainder=None):
+    if previous_remainder is not None:
+        data = np.concatenate((previous_remainder, data))
+
+    smoothed_data = []
+    remainder = data[-2:]
+
+    for i in range(len(data) - 2):
+        window = data[i:i + 3]
+        mean_value = np.mean(window)
+        smoothed_data.append(mean_value)
+
+    return smoothed_data, remainder
+2. Anpassen der update_plot_data_mean_filter Methode:
+Die Methode update_plot_data_mean_filter wurde angepasst, um den remainder der geglätteten Daten zu verwenden.
+Der remainder wird nun als Attribut der Klasse (self.remainder) gespeichert und bei jedem Aufruf der Funktion smooth_data übergeben.
+python
+Code kopieren
+def update_plot_data_mean_filter(self):
+    print("Update Plot Data Mittelwert")
+    from safe_to_excel import df
+    IR_raw_list = df['Red'].tail(SAMPE_ARRAY).astype(float)  # Gibt die letzten 100 Werte aus
+    IR_raw_list.reset_index(drop=True, inplace=True)  # Setze den Index zurück, damit beginnen wir beim Index 0
+
+    # Daten glätten, wobei der vorherige remainder verwendet wird
+    IR_smooth_list, self.remainder = smooth_data(IR_raw_list, getattr(self, 'remainder', None))
+
+    # Geplättete Daten plotten
+    self.plot_smoothed_data(IR_smooth_list)
+3. Anpassen der plot_smoothed_data Methode:
+Die Methode plot_smoothed_data wurde angepasst, um die geglätteten Daten korrekt zu plotten.
+Die Methode übernimmt die geglätteten Daten (smoothed_data) und aktualisiert den Plot.
+python
+Code kopieren
+def plot_smoothed_data(self, smoothed_data):
+    index = 0  # Startindex für den Datenabruf
+    while index < SAMPE_ARRAY:
+        data_point = smoothed_data[index]  # Datenpunkt für den aktuellen Index
+
+        print(f"Glätteter Datenpunkt {index + 1}: {data_point}")  # Datenpunkt printen
+
+        self.data = np.roll(self.data, -1)  # Verschiebt oder rollt die Elemente des Arrays um eine Position
+        self.data[-1] = data_point  # Setzt den Datenpunkt an das Ende des Arrays
+        self.plot_item.setData(y=self.data)  # Aktualisieren der Daten des Plot-Items
+
+        pg.QtCore.QCoreApplication.processEvents()  # Aktualisieren des Plot-Widgets
+        time.sleep(0.017)  # Pause von 10 Millisekunden
+
+        index += 1
+Zusammenfassung:
+Die Funktionalität zum Glätten von Daten mit einem Mittelwertfilter wurde implementiert.
+Der remainder der Daten wird verwendet, um die Glättung über mehrere Datenfenster hinweg konsistent zu halten.
+Die Methoden wurden entsprechend angepasst, um die geglätteten Daten korrekt zu plotten und anzuzeigen.
