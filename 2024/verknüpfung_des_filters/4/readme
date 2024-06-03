@@ -1,7 +1,8 @@
 Wir versuchen nun den Code so umzuändern, dass wir 2 Threads haben, einen import Thread und einen Plotting Thread. Der Import Thread prüft permanent ob neue Daten verfügbar sind, der Plotting Thread plottet derweil die ganze Zeit. 
 
-###### Step 1: Erzeugungs eines Q Threads der die Daten an eine Pufferliste anfügt: ######
 
+
+###### Step 1: Erzeugungs eines Q Threads der die Daten an eine Pufferliste anfügt: ######
 
 
 class DataUpdater(QObject):
