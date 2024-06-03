@@ -156,6 +156,9 @@ class PlotterWindow(baseclass, uiclass):
     def on_data_updated(self):
         self.list_data_ir_puffer = self.data_updater.list_data_ir_puffer
 
+####################################
+
+Die Variable list_data_ir_puffer = Muss dann noch bei den anderen stellen mit = self.data_updater.list_data_ir_puffer getauscht werden
 
 
 
