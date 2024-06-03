@@ -109,8 +109,26 @@ class DataUpdater(QThread):
                 # Signal senden, um anzuzeigen, dass neue Daten verfügbar sind
                 self.data_updated.emit()
 
-            time.sleep(0.1)  # Beispiel: Wartezeit von 0.1 Sekunden
-####################
+            time.sleep(0.1)  # Beispiel: Wartezeit von 0.1 
+
+#################### Weitere Anpassungen #####################
+
+Starten des Q Thread in der Plotter Klasse
+-----------------------------------------
+
+class PlotterWindow(QMainWindow):
+    def __init__(self, df):
+        super().__init__()
+        self.data_updater = DataUpdater(df)  # Erstellen Sie eine Instanz des DataUpdater-Threads
+        self.data_updater.data_updated.connect(self.handle_data_updated)  # Verknüpfen Sie das Signal mit einer Funktion
+        self.data_updater.start()  # Starten Sie den Thread
+
+    def handle_data_updated(self):
+        # Diese Funktion wird aufgerufen, wenn das Signal data_updated ausgesendet wird
+        # Hier können Sie den Plot aktualisieren oder andere Aktionen durchführen, um auf neue Daten zu reagieren
+        pass
+
+
 
 
 
