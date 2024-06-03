@@ -1,4 +1,5 @@
-Wir versuchen nun den Code so umzuändern, dass wir 2 Threads haben, einen import Thread und einen Plotting Thread. Der Import Thread prüft permanent ob neue Daten verfügbar sind, der Plotting Thread plottet derweil die ganze Zeit. 
+Wir versuchen nun den Code so umzuändern, dass wir 2 Threads haben, einen import Thread und einen Plotting Thread. 
+Der Import Thread prüft permanent ob neue Daten verfügbar sind, der Plotting Thread plottet derweil die ganze Zeit. 
 
 
 
