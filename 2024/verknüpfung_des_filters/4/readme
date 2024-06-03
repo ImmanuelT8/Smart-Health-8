@@ -1,6 +1,6 @@
 Wir versuchen nun den Code so umzuändern, dass wir 2 Threads haben, einen import Thread und einen Plotting Thread. Der Import Thread prüft permanent ob neue Daten verfügbar sind, der Plotting Thread plottet derweil die ganze Zeit. 
 
-Step 1: Erzeugungs eines Q Threads der die Daten an eine Pufferliste anfügt:
+###### Step 1: Erzeugungs eines Q Threads der die Daten an eine Pufferliste anfügt: ######
 
 
 
@@ -10,15 +10,11 @@ class DataUpdater(QObject):
     def __init__(self, df):
         super().__init__()
   
-       
-
     def run(self):
 
         global df_old
         global list_data_ir_puffer
         df_old = None #dataframe der verwendet wird zum prüfen ob sich der importierte df verändert hat
-
-
 
         while True:
             # Überprüfe, ob neue Daten verfügbar sind
