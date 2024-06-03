@@ -83,7 +83,34 @@ Der Code für den QThread DataUpdater sieht ebenfalls gut aus. Er überprüft ko
 und fügt die letzten 100 Datenpunkte des Red-Attributs dem list_data_ir_puffer hinzu. Wenn die Länge von list_data_ir_puffer mehr als 500 beträgt, 
 wird eine Meldung ausgegeben.
 
+########### Anmerkung Q Objekt ist falsch wir brauchen einen Q Thread ##############
 
+class DataUpdater(QThread):
+    data_updated = pyqtSignal()
+
+    def __init__(self, df):
+        super().__init__()
+        self.df = df
+        self.df_old = None  # DataFrame zur Überprüfung auf Änderungen
+        self.list_data_ir_puffer = []  # Liste für neue Daten
+
+    def run(self):
+        while True:
+            # Überprüfen, ob neue Daten verfügbar sind
+            df_new = self.df  # Annahme: Hier würde der aktuelle DataFrame abgerufen werden
+            if not df_new.equals(self.df_old):
+                # Neue Daten vorhanden
+                self.list_data_ir_puffer += df_new['Red'].tail(SAMPE_ARRAY).astype(float).tolist()
+                self.df_old = df_new
+
+                if len(self.list_data_ir_puffer) > 500:
+                    print("Die Anzahl der Einträge in der Liste IR Puffer ist größer als 500.")
+
+                # Signal senden, um anzuzeigen, dass neue Daten verfügbar sind
+                self.data_updated.emit()
+
+            time.sleep(0.1)  # Beispiel: Wartezeit von 0.1 Sekunden
+####################
 
 
 
