@@ -35,4 +35,55 @@ class DataUpdater(QObject):
             time.sleep(0.1)  # Beispiel: Wartezeit von 1 Sekunde
 
 
+################## 2 Plotten der Liste #############################
+
+
+
+    def update_plot_data_no_filter(self):
+        global list_data_ir_puffer
+        global SAMPE_ARRAY
+
+        # Erhalte die ersten 100 Datenpunkte aus der Liste
+        data_to_plot_IR = list_data_ir_puffer[:SAMPE_ARRAY]
+
+        index = 0  # Startindex für den Datenabruf
+        for data_point_IR in data_to_plot_IR:  #data_point: Diese Variable repräsentiert jeden einzelnen Datenpunkt, der während der Iteration durch data_to_plot geplottet wird.
+            print(f"Datenpunkt {index + 1}: {data_point_IR}")  # Datenpunkt printen
+
+            self.data = np.roll(self.data, -1)
+            self.data[-1] = data_point_IR
+            self.plot_item.setData(y=self.data)  # Aktualisieren der Daten des Plot-Items
+
+            pg.QtCore.QCoreApplication.processEvents()  # Aktualisieren des Plot-Widgets
+            time.sleep(0.017)  # Pause von 10 Millisekunden
+
+            index += 1
+
+        # Entferne die geplotteten Datenpunkte aus der Liste
+        list_data_ir_puffer = list_data_ir_puffer[SAMPE_ARRAY:]
+
+
+########################################### Varianblen Initalisieren in Plotter Window ########################
+
+        # Initialisierung der Variablen für die Plotting-Funktionalität
+        self.data_to_plot_IR = []
+        self.data_point_IR = None
+
+
+####################################### Zusammenfassung ############################################
+
+Der Code sieht gut aus! Du hast die Variablen self.data_to_plot_IR und self.data_point_IR in der Klasse PlotterWindow korrekt initialisiert. 
+Diese Variablen werden verwendet, um die zu plottenden Daten und den aktuellen Datenpunkt zu speichern.
+
+In der update_plot_data_no_filter-Methode werden die ersten 100 Datenpunkte aus list_data_ir_puffer in data_to_plot_IR kopiert, 
+und dann werden sie einzeln geplottet. Nach dem Plotten werden diese Datenpunkte aus list_data_ir_puffer entfernt, um sicherzustellen, 
+dass nur neue Datenpunkte für das nächste Plotten verfügbar sind.
+
+Der Code für den QThread DataUpdater sieht ebenfalls gut aus. Er überprüft kontinuierlich, ob ein neuer DataFrame verfügbar ist, 
+und fügt die letzten 100 Datenpunkte des Red-Attributs dem list_data_ir_puffer hinzu. Wenn die Länge von list_data_ir_puffer mehr als 500 beträgt, 
+wird eine Meldung ausgegeben.
+
+
+
+
 
