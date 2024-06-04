@@ -31,3 +31,7 @@ plotter_live_Test_while_klappt_mit_exit_checkbox.py Hier klappt auch das stoppen
 
 #################
 plotter_live_Testdaten_array_funkt.py Hier werden die ersten 500 korrekt geprintet, also in der while schleife, wenn die IR Checkbox aktiviert ist, der Puffer läuft abre noch über.
+
+#### live_plotter_testdaten_klappt.py ####
+
+Hier werden die Daten nun korrekt ausgegeben, ohne dass der Filter überläuft (Delay wurde gelöscht) nach einigen Datensätzen ist aber der Dataframe leer. (ev ein älterer Bug?)
