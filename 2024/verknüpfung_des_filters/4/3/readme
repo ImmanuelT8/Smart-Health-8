@@ -1,0 +1,22 @@
+Erstmal eine async while Schleife eingebaut, sobald das plotter Fenster geöffnet wird:
+
+(Code 1)
+
+################################################
+import asyncio
+import threading
+
+# Die asynchrone Funktion
+async def test_async():
+    while True:
+        print("Test")
+        await asyncio.sleep(1)
+
+# Die Funktion, die in einem separaten Thread ausgeführt wird
+def run_async_function():
+    asyncio.run(test_async())
+
+# Starten des Threads
+_thread = threading.Thread(target=run_async_function)
+_thread.start()
+##########################################################
