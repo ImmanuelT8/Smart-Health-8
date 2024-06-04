@@ -24,3 +24,7 @@ _thread.start()
 Code 2:
 
 Einige Bedingungen hinzugefügt, damit das Fenster geschlossen werden kann (Flagg etc)
+
+################
+
+plotter_live_Test_while_klappt_mit_exit_checkbox.py Hier klappt auch das stoppen der Testschleife, wenn die Checkbox deaktiviert wird (IR)
