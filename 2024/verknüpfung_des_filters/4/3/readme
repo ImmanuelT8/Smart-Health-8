@@ -28,3 +28,6 @@ Einige Bedingungen hinzugefügt, damit das Fenster geschlossen werden kann (Flag
 ################
 
 plotter_live_Test_while_klappt_mit_exit_checkbox.py Hier klappt auch das stoppen der Testschleife, wenn die Checkbox deaktiviert wird (IR)
+
+#################
+plotter_live_Testdaten_array_funkt.py Hier werden die ersten 500 korrekt geprintet, also in der while schleife, wenn die IR Checkbox aktiviert ist, der Puffer läuft abre noch über.
