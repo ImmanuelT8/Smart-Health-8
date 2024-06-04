@@ -20,3 +20,7 @@ def run_async_function():
 _thread = threading.Thread(target=run_async_function)
 _thread.start()
 ##########################################################
+
+Code 2:
+
+Einige Bedingungen hinzugefügt, damit das Fenster geschlossen werden kann (Flagg etc)
