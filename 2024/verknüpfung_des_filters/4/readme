@@ -160,5 +160,9 @@ class PlotterWindow(baseclass, uiclass):
 
 Die Variable list_data_ir_puffer = Muss dann noch bei den anderen stellen mit = self.data_updater.list_data_ir_puffer getauscht werden
 
+########## live_plotter.py #############
 
+Printet serial Daten die später geplottet gehören. 
+
+########################################
 
