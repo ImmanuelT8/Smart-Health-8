@@ -1,1 +1,5 @@
 Hier wurde nun eine Flag hinzugefügt die gesetzt wird wenn eine Checkbox aktiv ist, ist diese Flag nicht gesetzt (False) so wird die Pufferliste dauernd gelöscht
+
+#### plottet nicht korrekt file ####
+
+plottet jetzt, aber nicht korrekt. 
