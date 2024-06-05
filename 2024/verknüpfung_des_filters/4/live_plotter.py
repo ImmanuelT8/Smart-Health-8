@@ -1,4 +1,4 @@
-5import pyqtgraph as pg
+import pyqtgraph as pg
 from PyQt6.QtWidgets import QMainWindow, QDialog
 from PyQt6.QtGui import QAction
 
