@@ -1,1 +1,668 @@
+Version 1:
+
+Fenster mit Plotter Widget erzeugen und Testdaten plotten
+pulse_live_window
+
+Wichtige Anmerkung: Im QT Designer muss im Fenster ein Widget erzeugt werden, das wir zum plotten nutzen! Containers >> Widget. In diesem Widget müssen die Klassen umgestellt werden >> Rechtsklick: Als Platzhalter für Benutzerdefinierte Klassen > PlotWidget. Wir nennen es graphWidget. Zudem müssen permanent Daten geplottet werden, sonst schließt sich das Fenster. Weiter muss das Fenster danach mit closeEvent geschlossen werden, sonst läuft es im Hintergrund weiter. Hierzu wird eine Funktion erstellt, im pulse_live_window:
+
+    # closeEvent-Funktion, die aufgerufen wird, wenn das Fenster geschlossen wird
+    def closeEvent(self, event: QCloseEvent):
+        # Signal emittieren, wenn das Fenster geschlossen wird
+        print("pulse window cosed")
+        self.closed.emit()
+Es wird hierbei das pyqtSignal Close ausgesendet:
+
+    # Signal definieren
+    closed = pyqtSignal()
+Diese Signal triggert nun eine Funktion im Mainprogram SPO2, wodurch die Funktion clear_pulse_live_window aufgerufen wird, die die Variable pulse_live_window auf None setzt, womit sich das Fenster schließt.
+
+    def pulse_live_clicked(self):
+        print("pulse live clicked")
+        
+        # Überprüfen, ob das Pulse Live-Fenster bereits erstellt wurde
+        if not self.pulse_live_window:
+            # Erstelle das Pulse Live-Fenster
+            self.pulse_live_window = PulseWindow()
+            self.pulse_live_window.show()
+            # Verbinde das Schließen des Pulse Live-Fensters mit der Löschung der Instanzvariable
+            self.pulse_live_window.closed.connect(self.clear_pulse_live_window)
+
+    def clear_pulse_live_window(self):
+        # Lösche das Pulse Live-Fenster, wenn es geschlossen wird
+        self.pulse_live_window = None
+Zuerst wird im Fenster der pyqtgraph eingebunden, das QMainWindow, QDialog, das QCloseEvent, iuc, numpy und pyqtSignal. Danach wird die ui Datei eingebunden mit einer uiclass und baseclass:
+
+# Laden der UI-Datei 
+uiclass, baseclass = uic.loadUiType("pulse_live_window.ui")
+Es wird eine Klasse für das Pulse Window erstellt (baseclass und uiclass), hier wird dann das Signal closed definiert. Das Signal closed wird danach mit dem Closed event (der Funktion) verbunden wird:
+
+
+       # Verbindung des Signals mit der closeEvent-Funktion
+        self.closed.connect(self.closeEvent)
+das closeEvent sendet dann das Signal closed aus (closed.emit) siehe oben.
+
+Weiter werden 100 Nullen produziert und auf die Variable data gelegt. Danach wird das Plot Widget erzeugt:
+
+     self.data = [0] * 100
+        # Erstellen des Plot-Items
+        self.plot_item = self.graphWidget.plot(self.data, pen='w')
+Jetzt wird eine Update Funktion erstellt, die die Daten des Widget aktualisiert (mit 100 Zufallswerte):
+
+ def update_plot(self):
+        # Zufällige Daten generieren
+        new_data = np.random.randint(0, 100, size=100)
+        self.data = new_data
+
+        # Plot aktualisieren
+        self.plot_item.setData(self.data)
+Diese Funktion wird über einen Timer getriggert:
+
+        # Timer-Event erstellen
+        self.timer = pg.QtCore.QTimer()
+        self.timer.timeout.connect(self.update_plot)
+        self.timer.start(1000)  # Alle 1000 ms (1 Sekunde) aktualisieren
+
+Der ganze Code:
+
+import pyqtgraph as pg
+from PyQt6.QtWidgets import QMainWindow, QDialog
+from PyQt6.QtGui import QAction, QCloseEvent
+from PyQt6 import uic
+import numpy as np
+from PyQt6.QtCore import pyqtSignal
+
+
+# Laden der UI-Datei 
+uiclass, baseclass = uic.loadUiType("pulse_live_window.ui")
+
+class PulseWindow(baseclass, uiclass):
+    # Signal definieren
+    closed = pyqtSignal()
+
+    def __init__(self):
+        super().__init__()
+        # Laden der UI-Datei
+        self.setupUi(self)
+        # Erstellen einer Liste mit 100 Nullen
+        self.data = [0] * 100
+
+        # Erstellen des Plot-Items
+        self.plot_item = self.graphWidget.plot(self.data, pen='w')
+
+        # Timer-Event erstellen
+        self.timer = pg.QtCore.QTimer()
+        self.timer.timeout.connect(self.update_plot)
+        self.timer.start(1000)  # Alle 1000 ms (1 Sekunde) aktualisieren
+
+        # Verbindung des Signals mit der closeEvent-Funktion
+        self.closed.connect(self.closeEvent)
+
+    def update_plot(self):
+        # Zufällige Daten generieren
+        new_data = np.random.randint(0, 100, size=100)
+        self.data = new_data
+
+        # Plot aktualisieren
+        self.plot_item.setData(self.data)
+
+    # closeEvent-Funktion, die aufgerufen wird, wenn das Fenster geschlossen wird
+    def closeEvent(self, event: QCloseEvent):
+        # Signal emittieren, wenn das Fenster geschlossen wird
+        print("pulse window cosed")
+        self.closed.emit()
+
+Mainskript
+
+# -*- coding: latin-1 -*-
+
+import sys
+from PyQt6 import uic
+from PyQt6.QtWidgets import QApplication, QMainWindow
+from connect_to_esp import ESPConnectThread
+from pulse_live_window import PulseWindow
+
+
+class MainWindow(QMainWindow):
+
+    def __init__(self):
+        super(MainWindow, self).__init__()
+        self.ui = uic.loadUi("main_window.ui", self)
+        
+        # Zugriff auf den Button und andere Elemente
+        self.start_button = self.ui.Start
+        self.stop_button = self.ui.Stopp 
+        self.plotter_button = self.ui.Plotter
+        self.training_button = self.ui.Trainiere
+
+        #Zugriff auf drop down Menüpunkte 
+        self.action_pulse_live = self.ui.actionPulse_live
+        
+        # Verbindung des Buttons mit der Funktion
+        self.start_button.clicked.connect(self.start_clicked)
+        self.stop_button.clicked.connect(self.stop_clicked)
+        self.action_pulse_live.triggered.connect(self.pulse_live_clicked)
+        
+        # Initialisiere das Pulse Live-Fenster
+        self.pulse_live_window = None
+
+    def start_clicked(self):
+        print("Start button clicked")
+        self.start_button.setEnabled(False)
+
+        address = "CC:50:E3:9C:15:02"  # Hier die MAC-Adresse des ESP32 einsetzen
+        self.thread = ESPConnectThread(address)
+        self.thread.connected.connect(self.on_connected)
+        self.thread.connection_failed.connect(self.on_connection_failed)
+        self.thread.disconnection.connect(self.on_disconnected)
+        self.thread.start()
+
+    def stop_clicked(self):
+        print("Stop button clicked")        
+        self.thread.disconnect()
+
+    def on_connected(self, success):
+        if success:
+            self.start_button.setEnabled(False)
+            self.stop_button.setEnabled(True)
+            self.plotter_button.setEnabled(True)
+            self.training_button.setEnabled(True)
+        else:
+            print("Connection to device failed")
+            self.start_button.setEnabled(True)
+
+    def on_connection_failed(self):
+        self.start_button.setEnabled(True)
+
+    def on_disconnected(self):
+        self.start_button.setEnabled(True)
+        self.stop_button.setEnabled(False)
+        self.plotter_button.setEnabled(False)
+        self.training_button.setEnabled(False)
+
+    def pulse_live_clicked(self):
+        print("pulse live clicked")
+        
+        # Überprüfen, ob das Pulse Live-Fenster bereits erstellt wurde
+        if not self.pulse_live_window:
+            # Erstelle das Pulse Live-Fenster
+            self.pulse_live_window = PulseWindow()
+            self.pulse_live_window.show()
+            # Verbinde das Schließen des Pulse Live-Fensters mit der Löschung der Instanzvariable
+            self.pulse_live_window.closed.connect(self.clear_pulse_live_window)
+
+    def clear_pulse_live_window(self):
+        # Lösche das Pulse Live-Fenster, wenn es geschlossen wird
+        self.pulse_live_window = None
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
+
+Der Vollstädigkeit halber hier noch das connect_to_esp Modul
+
+# -*- coding: latin-1 -*-
+
+# esp_connect.py
+
+from ast import Try
+import asyncio
+from PyQt6.QtCore import QThread, pyqtSignal
+from bleak import BleakClient  # BLE Libary
+import numpy
+import os
+import data_manager
+
+class ESPConnectThread(QThread):
+    connected = pyqtSignal(bool)  # Signal, das gesendet wird, wenn die Verbindung hergestellt ist
+    connection_failed = pyqtSignal(bool)  # Signal, das gesendet wird, wenn die Verbindung fehlgeschlagen ist
+    disconnection = pyqtSignal(bool)
+
+    def __init__(self, address):
+        super().__init__()  # Ein Aufruf des Konstruktors der Basisklasse QThread und Zuweisung der Adresse des ESP32-Geräts zur Instanzvariablen address.
+        self.address = address
+        self.client = None  # Definition des client-Attributs
+        self.exit_flag = None
+        self._is_connected = False
+        self.red_list = []
+        self.ir_list = []
+        self.folder_path = "data"
+        if not os.path.exists(self.folder_path):
+            os.makedirs(self.folder_path)
+        self.filename = None
+        self.full_path = None
+
+    def run(self):  # Die run-Methode, die den Code enthält, der im Thread ausgeführt wird.
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(self.connect_to_esp())
+        loop.close()
+
+    async def handle_uuid1_notify(self, sender, data):
+        print("UUID 1 notify")
+        np_red_values = numpy.frombuffer(data, dtype=numpy.uint32)  # Daten werden in ein Numpy Array convertiert
+        self.red_list.extend(np_red_values.tolist())
+        await self.check_and_append_data()
+
+    async def handle_uuid2_notify(self, sender, data):
+        print("UUID 2 notify")
+        np_ir_values = numpy.frombuffer(data, dtype=numpy.uint32)  # Daten werden in ein Numpy Array convertiert
+        self.ir_list.extend(np_ir_values.tolist())
+        await self.check_and_append_data()
+
+    async def check_and_append_data(self):
+        if data_manager.is_data_available(self.red_list, self.ir_list):
+            if not self._is_connected:
+                self._is_connected = True  # Setzen der internen Variable auf True
+                self.connected.emit(True)  # Senden des pyqt Signals, dass die Verbindung besteht
+                self.filename, self.full_path = data_manager.generate_timestamped_filename(self.folder_path)
+
+            # Verwenden der ausgelagerten Funktion zum Erstellen oder Aktualisieren der Excel-Datei
+            data_manager.create_or_update_excel_file(self.folder_path, self.filename, self.red_list, self.ir_list)
+
+
+            # Leeren der Listen nach dem Speichern der Daten
+            self.red_list.clear()
+            self.ir_list.clear()
+
+    async def connect_to_esp(self):  # Methode zur Verbindungsherstellung mit dem ESP
+        print("Connect to device ...")
+        UUID1 = "beb5483e-36e1-4688-b7f5-ea07361b26a8"
+        UUID2 = "beb5483e-36e1-4688-b7f5-ea07361b26a9"
+
+        try:
+            async with BleakClient(self.address) as client:  # Verbindung mit dem ESP herstellen
+                services = client.services
+                for service in services:
+                    characteristics = service.characteristics
+                    for characteristic in characteristics:
+                        if characteristic.uuid == UUID1:
+                            await client.start_notify(characteristic.handle, self.handle_uuid1_notify)
+                        elif characteristic.uuid == UUID2:
+                            await client.start_notify(characteristic.handle, self.handle_uuid2_notify)
+
+                while True:
+                    if self.exit_flag:  # Überprüfen des Exit-Flags
+                        break  # Schleife beenden, wenn das Exit-Flag gesetzt ist
+
+                    if not client.is_connected:
+                        print("Lost connection")
+                        self._is_connected = False
+                        self.disconnection.emit(True)  # Senden des Signals, dass die Verbindung getrennt ist
+                        break
+
+                    await asyncio.sleep(1)
+
+        except Exception as e:
+            print("Connection failed")
+            self.connection_failed.emit(True)  # Sendet das pyqt Signal Verbindung gescheitert
+            self._is_connected = False  # Setzt die Variable die prüft ob sich schon verbunden wurde auf false
+
+    def disconnect(self):
+        print("Device disconnected")
+        self.exit_flag = True
+        self.disconnection.emit(True)  # Sendet das Signal disconnection
+
+Kurze Anmerkung
+Wenn ich den Timer lösche und keine neuen Daten mehr geplottet werden, dann bleibt das Fenster offen, es wurde früher nicht geschlossen weil keine neuen Daten geplottet wurden, ich denke es lag ehre daran, dass ich das Widget nicht als PlotingWidget in der Klasse im Q Designer definiert hatte?
+
+Sensordaten Plotten mit jeweils einen Plot von 100 Datensätzen
+Wichtige Anpassungen (Chat GPT zusammengefasst)
+
+1. Änderungen in der ESPConnectThread-Klasse
+
+a. Hinzufügen der pulse_live_window-Variable
+
+In der ESPConnectThread-Klasse wurde eine pulse_live_window-Variable hinzugefügt, die die Instanz des PulseWindow speichert.
+
+
+b. Aktualisieren des Konstruktors
+
+Der Konstruktor der ESPConnectThread-Klasse wurde so geändert, dass er die pulse_live_window-Instanz akzeptiert und speichert:
+
+def __init__(self, address, pulse_live_window=None):
+    super().__init__()
+    self.address = address
+    self.pulse_live_window = pulse_live_window
+c. Übergeben der Daten an das PulseWindow
+
+Die Methode check_and_append_data wurde aktualisiert, um die neuen Daten an das PulseWindow zu übergeben:
+
+async def check_and_append_data(self):
+    if self.pulse_live_window:
+        # Beispiel: Daten von der Benachrichtigung erhalten
+        data = ...  # Ersetzen Sie dies durch den tatsächlichen Datenerhalt
+
+        # Daten an das PulseWindow übergeben
+        self.pulse_live_window.update_data(data)
+
+2. Änderungen in der MainWindow-Klasse
+
+
+a. Übergeben der pulse_live_window-Instanz an den Thread
+
+In der MainWindow-Klasse wurde die pulse_live_window-Instanz erstellt und an den ESPConnectThread übergeben:
+
+def start_clicked(self):
+    print("Start button clicked")
+    self.start_button.setEnabled(False)
+
+    address = "CC:50:E3:9C:15:02"  # Hier die MAC-Adresse des ESP32 einsetzen
+    self.thread = ESPConnectThread(address, self.pulse_live_window)
+    self.thread.connected.connect(self.on_connected)
+    self.thread.connection_failed.connect(self.on_connection_failed)
+    self.thread.disconnection.connect(self.on_disconnected)
+    self.thread.start()
+b. Aktualisieren des pulse_live_window-Threads bei Klick auf "Pulse Live"
+
+Die Methode pulse_live_clicked wurde so geändert, dass der Thread aktualisiert wird, wenn das PulseWindow geöffnet wird:
+
+def pulse_live_clicked(self):
+    print("pulse live clicked")
+    
+    if not self.pulse_live_window:
+        self.pulse_live_window = PulseWindow()
+        self.pulse_live_window.show()
+        self.pulse_live_window.closed.connect(self.clear_pulse_live_window)
+
+    if self.thread:
+        self.thread.pulse_live_window = self.pulse_live_window
+3. Änderungen in der PulseWindow-Klasse
+
+a. Hinzufügen einer Methode zur Aktualisierung der Daten
+
+Eine neue Methode update_data wurde hinzugefügt, um die ankommenden Daten zu aktualisieren:
+
+
+def update_data(self, new_data):
+    self.data = new_data
+    self.plot_item.setData(self.data)
+b. Erstellen des plot_item und Starten des Timers Das plot_item wird erstellt und der Timer wird gestartet, um den Plot regelmäßig zu aktualisieren:
+
+self.plot_item = self.graphWidget.plot(self.data, pen='w')
+
+self.timer = pg.QtCore.QTimer()
+self.timer.timeout.connect(self.update_plot)
+self.timer.start(1000)
+c. Aktualisieren des Plots mit den neuen Daten Die Methode update_plot wurde hinzugefügt, um den Plot mit den neuen Daten zu aktualisieren:
+
+def update_plot(self):
+    self.plot_item.setData(self.data)
+Zusammenfassung
+
+Diese Änderungen ermöglichen es, dass:
+
+Das PulseWindow korrekt erstellt und angezeigt wird, wenn der Benutzer auf "Pulse Live" klickt. Der ESPConnectThread die pulse_live_window-Instanz erhält und verwendet, um die ankommenden Daten an das Fenster zu übergeben. Das PulseWindow die Daten aktualisiert und den Plot entsprechend aktualisiert. Diese Anpassungen stellen sicher, dass die neuen Daten vom ESPConnectThread an das PulseWindow übergeben und dort geplottet werden.
+
+Das ganze Mainskript:
+
+# -*- coding: latin-1 -*-
+
+import sys
+from PyQt6 import uic
+from PyQt6.QtWidgets import QApplication, QMainWindow
+from connect_to_esp import ESPConnectThread
+from pulse_live_window import PulseWindow
+
+
+class MainWindow(QMainWindow):
+
+    def __init__(self):
+        super(MainWindow, self).__init__()
+        self.ui = uic.loadUi("main_window.ui", self)
+        
+        # Zugriff auf den Button und andere Elemente
+        self.start_button = self.ui.Start
+        self.stop_button = self.ui.Stopp 
+        self.plotter_button = self.ui.Plotter
+        self.training_button = self.ui.Trainiere
+
+        #Zugriff auf drop down Menüpunkte 
+        self.action_pulse_live = self.ui.actionPulse_live
+        
+        # Verbindung des Buttons mit der Funktion
+        self.start_button.clicked.connect(self.start_clicked)
+        self.stop_button.clicked.connect(self.stop_clicked)
+        self.action_pulse_live.triggered.connect(self.pulse_live_clicked)
+        
+        # Initialisiere das Pulse Live-Fenster
+        self.pulse_live_window = None
+
+    def start_clicked(self):
+        print("Start button clicked")
+        self.start_button.setEnabled(False)
+
+        address = "CC:50:E3:9C:15:02"  # Hier die MAC-Adresse des ESP32 einsetzen
+        self.thread = ESPConnectThread(address)
+        self.thread.connected.connect(self.on_connected)
+        self.thread.connection_failed.connect(self.on_connection_failed)
+        self.thread.disconnection.connect(self.on_disconnected)
+        self.thread.start()
+
+    def stop_clicked(self):
+        print("Stop button clicked")        
+        self.thread.disconnect()
+
+    def on_connected(self, success):
+        if success:
+            self.start_button.setEnabled(False)
+            self.stop_button.setEnabled(True)
+            self.plotter_button.setEnabled(True)
+            self.training_button.setEnabled(True)
+        else:
+            print("Connection to device failed")
+            self.start_button.setEnabled(True)
+
+    def on_connection_failed(self):
+        self.start_button.setEnabled(True)
+
+    def on_disconnected(self):
+        self.start_button.setEnabled(True)
+        self.stop_button.setEnabled(False)
+        self.plotter_button.setEnabled(False)
+        self.training_button.setEnabled(False)
+
+    def pulse_live_clicked(self):
+        print("pulse live clicked")
+        
+        # Überprüfen, ob das Pulse Live-Fenster bereits erstellt wurde
+        if not self.pulse_live_window:
+            # Erstelle das Pulse Live-Fenster
+            self.pulse_live_window = PulseWindow()
+            self.pulse_live_window.show()
+            # Verbinde das Schließen des Pulse Live-Fensters mit der Löschung der Instanzvariable
+            self.pulse_live_window.closed.connect(self.clear_pulse_live_window)
+
+
+    def pulse_live_clicked(self):
+            print("pulse live clicked")
+        
+            if not self.pulse_live_window:
+                self.pulse_live_window = PulseWindow()
+                self.pulse_live_window.show()
+                self.pulse_live_window.closed.connect(self.clear_pulse_live_window)
+
+            # Aktualisieren Sie den Thread mit der neuen pulse_live_window-Instanz
+            if self.thread:
+                self.thread.pulse_live_window = self.pulse_live_window
+
+
+
+    def clear_pulse_live_window(self):
+        # Lösche das Pulse Live-Fenster, wenn es geschlossen wird
+        self.pulse_live_window = None
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
+connect_to_esp
+
+# -*- coding: latin-1 -*-
+
+# esp_connect.py
+
+from ast import Try
+import asyncio
+from PyQt6.QtCore import QThread, pyqtSignal
+from bleak import BleakClient  # BLE Libary
+import numpy
+import os
+import data_manager
+
+class ESPConnectThread(QThread):
+    connected = pyqtSignal(bool)  # Signal, das gesendet wird, wenn die Verbindung hergestellt ist
+    connection_failed = pyqtSignal(bool)  # Signal, das gesendet wird, wenn die Verbindung fehlgeschlagen ist
+    disconnection = pyqtSignal(bool)
+
+    def __init__(self, address,  pulse_live_window=None):
+        super().__init__()  # Ein Aufruf des Konstruktors der Basisklasse QThread und Zuweisung der Adresse des ESP32-Geräts zur Instanzvariablen address.
+        self.address = address
+        self.client = None  # Definition des client-Attributs
+        self.exit_flag = None
+        self._is_connected = False
+        self.red_list = []
+        self.ir_list = []
+        self.folder_path = "data"
+        if not os.path.exists(self.folder_path):
+            os.makedirs(self.folder_path)
+        self.filename = None
+        self.full_path = None
+        self.pulse_live_window = pulse_live_window
+
+
+    def run(self):  # Die run-Methode, die den Code enthält, der im Thread ausgeführt wird.
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(self.connect_to_esp())
+        loop.close()
+
+    async def handle_uuid1_notify(self, sender, data):
+        print("UUID 1 notify")
+        np_red_values = numpy.frombuffer(data, dtype=numpy.uint32)  # Daten werden in ein Numpy Array convertiert
+        self.red_list.extend(np_red_values.tolist())
+        await self.check_and_append_data()
+
+    async def handle_uuid2_notify(self, sender, data):
+        print("UUID 2 notify")
+        np_ir_values = numpy.frombuffer(data, dtype=numpy.uint32)  # Daten werden in ein Numpy Array convertiert
+        self.ir_list.extend(np_ir_values.tolist())
+        await self.check_and_append_data()
+
+    async def check_and_append_data(self):
+        if data_manager.is_data_available(self.red_list, self.ir_list):
+            if not self._is_connected:
+                self._is_connected = True  # Setzen der internen Variable auf True
+                self.connected.emit(True)  # Senden des pyqt Signals, dass die Verbindung besteht
+                self.filename, self.full_path = data_manager.generate_timestamped_filename(self.folder_path)
+
+            # Verwenden der ausgelagerten Funktion zum Erstellen oder Aktualisieren der Excel-Datei
+            data_manager.create_or_update_excel_file(self.folder_path, self.filename, self.red_list, self.ir_list)
+
+            # Daten an das Pulse Live-Fenster senden, wenn es existiert
+            if self.pulse_live_window:
+                self.pulse_live_window.add_data(self.red_list, self.ir_list)
+                data = self.red_list
+                # Daten an das PulseWindow übergeben
+                self.pulse_live_window.update_data(data)
+
+            # Leeren der Listen nach dem Speichern der Daten
+            self.red_list.clear()
+            self.ir_list.clear()
+
+    async def connect_to_esp(self):  # Methode zur Verbindungsherstellung mit dem ESP
+        print("Connect to device ...")
+        UUID1 = "beb5483e-36e1-4688-b7f5-ea07361b26a8"
+        UUID2 = "beb5483e-36e1-4688-b7f5-ea07361b26a9"
+
+        try:
+            async with BleakClient(self.address) as client:  # Verbindung mit dem ESP herstellen
+                services = client.services
+                for service in services:
+                    characteristics = service.characteristics
+                    for characteristic in characteristics:
+                        if characteristic.uuid == UUID1:
+                            await client.start_notify(characteristic.handle, self.handle_uuid1_notify)
+                        elif characteristic.uuid == UUID2:
+                            await client.start_notify(characteristic.handle, self.handle_uuid2_notify)
+
+                while True:
+                    if self.exit_flag:  # Überprüfen des Exit-Flags
+                        break  # Schleife beenden, wenn das Exit-Flag gesetzt ist
+
+                    if not client.is_connected:
+                        print("Lost connection")
+                        self._is_connected = False
+                        self.disconnection.emit(True)  # Senden des Signals, dass die Verbindung getrennt ist
+                        break
+
+                    await asyncio.sleep(1)
+
+        except Exception as e:
+            print("Connection failed")
+            self.connection_failed.emit(True)  # Sendet das pyqt Signal Verbindung gescheitert
+            self._is_connected = False  # Setzt die Variable die prüft ob sich schon verbunden wurde auf false
+
+    def disconnect(self):
+        print("Device disconnected")
+        self.exit_flag = True
+        self.disconnection.emit(True)  # Sendet das Signal disconnection
+pulse live window
+
+import pyqtgraph as pg
+from PyQt6.QtWidgets import QMainWindow, QDialog
+from PyQt6.QtGui import QAction, QCloseEvent
+from PyQt6 import uic
+import numpy as np
+from PyQt6.QtCore import pyqtSignal
+
+
+# Laden der UI-Datei für das Einstellung Fenster im Liveplotter
+uiclass, baseclass = uic.loadUiType("pulse_live_window.ui")
+
+class PulseWindow(baseclass, uiclass):
+    # Signal definieren
+    closed = pyqtSignal()
+
+    def __init__(self):
+        super().__init__()
+        # Laden der UI-Datei
+        self.setupUi(self)
+        # Erstellen einer Liste mit 100 Nullen
+        self.data = [0] * 100
+
+        # Erstellen des Plot-Items
+        self.plot_item = self.graphWidget.plot(self.data, pen='w')
+
+
+        # Verbindung des Signals mit der closeEvent-Funktion
+        self.closed.connect(self.closeEvent)
+
+    def update_plot(self):
+        self.plot_item.setData(self.data)
+
+    def update_data(self, new_data):
+        self.data = new_data
+        self.plot_item.setData(self.data)
+
+
+
+    # closeEvent-Funktion, die aufgerufen wird, wenn das Fenster geschlossen wird
+    def closeEvent(self, event: QCloseEvent):
+        # Signal emittieren, wenn das Fenster geschlossen wird
+        print("pulse window cosed")
+        self.closed.emit()
+
+    def add_data(self, red_data, ir_data):
+        # Neue Daten anzeigen (hier nur als Beispiel print)
+        print(f"New red data: {red_data}")
+        print(f"New IR data: {ir_data}")
+        # Aktualisiere den Plot mit den neuen Daten
+        self.data = red_data  # Beispielweise nur die roten Daten verwenden
+        self.plot_item.setData(self.data)
+
 
